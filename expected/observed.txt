@@ -1,0 +1,5 @@
+direct-parse: runtimeType=ConflictProblemDto conflictId=c-1
+conflict-409: runtimeType=ProblemDetailsDto statusCode=409 x-request-id=[req-409] title=Conflict additionalData={extra: x} conflictId=n/a
+not-found-404: runtimeType=ProblemDetailsDto statusCode=404 x-request-id=[req-404] title=Not found additionalData={} conflictId=n/a
+gone-410-default: runtimeType=ProblemDetailsDto statusCode=410 x-request-id=[req-410] title=Gone additionalData={} conflictId=n/a
+unknown-type-418-default: runtimeType=ProblemDetailsDto statusCode=418 x-request-id=[req-418] title=Other additionalData={extra: x} conflictId=n/a

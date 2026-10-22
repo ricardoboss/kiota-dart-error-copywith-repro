@@ -1,0 +1,75 @@
+openapi: 3.0.3
+info:
+  title: Discriminator repro
+  version: 1.0.0
+servers:
+  - url: https://example.invalid
+paths:
+  /things:
+    get:
+      operationId: getThings
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+        "404":
+          description: not found
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/NotFoundProblemDto"
+        "409":
+          description: conflict
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ConflictProblemDto"
+        default:
+          description: error
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetailsDto"
+components:
+  schemas:
+    ProblemDetailsDto:
+      type: object
+      required: [type, title, status]
+      properties:
+        type:
+          type: string
+        title:
+          type: string
+        status:
+          type: integer
+          format: int32
+        detail:
+          type: string
+          nullable: true
+      discriminator:
+        propertyName: type
+        mapping:
+          https://example.invalid/problems/not-found: "#/components/schemas/NotFoundProblemDto"
+          https://example.invalid/problems/conflict: "#/components/schemas/ConflictProblemDto"
+          https://example.invalid/problems/gone: "#/components/schemas/GoneProblemDto"
+    NotFoundProblemDto:
+      allOf:
+        - $ref: "#/components/schemas/ProblemDetailsDto"
+        - type: object
+    ConflictProblemDto:
+      allOf:
+        - $ref: "#/components/schemas/ProblemDetailsDto"
+        - type: object
+          properties:
+            conflictId:
+              type: string
+    GoneProblemDto:
+      allOf:
+        - $ref: "#/components/schemas/ProblemDetailsDto"
+        - type: object
