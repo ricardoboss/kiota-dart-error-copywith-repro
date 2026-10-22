@@ -1,8 +1,8 @@
 # Copy-ready upstream report (not posted)
 
-Repro (public, frozen at e79cf0561aee4d890e48c23e4e764a60ca9302ad): https://github.com/ricardoboss/kiota-dart-error-copywith-repro
+Repro (public, frozen at e79cf0561aee4d890e48c23e4e764a60ca9302ad): https://github.com/ricardoboss/kiota-dart-error-copywith-repro/tree/e79cf0561aee4d890e48c23e4e764a60ca9302ad
 
-**Where to file:** the fix spans both components, so file in both:
+**Relevant trackers:** the reproduction concerns the interaction between generated models and the runtime adapter. A fix could be made on either side; coordinate any reports between:
 - Generator (generated `copyWith` / constructors): https://github.com/microsoft/kiota/issues
 - Runtime adapter (`HttpClientRequestAdapter`, `ApiException`): https://github.com/microsoft/kiota-dart/issues
 
