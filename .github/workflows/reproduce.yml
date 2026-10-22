@@ -1,0 +1,27 @@
+name: reproduce
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "0 6 * * 1"
+permissions:
+  contents: read
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        kiota: ["1.36.1"]
+        runtime: [pinned, latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: "3.13.5"
+      # Exit 0 only when the adapter output equals expected/observed.txt (subtype erased);
+      # exit 1 = behaviour changed, exit 2 = setup failure (never counted as a reproduction).
+      - run: scripts/reproduce.sh ${{ matrix.kiota }} ${{ matrix.runtime }}

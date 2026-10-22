@@ -1,0 +1,5 @@
+/lib/
+/.tools/
+/.dart_tool/
+/out/
+pubspec.lock
